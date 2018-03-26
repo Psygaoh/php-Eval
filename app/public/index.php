@@ -2,6 +2,10 @@
 
 use App\services\App;
 
+/**
+ * these 3 lines will be used to create the link to the pages without having to type everything; it will also replace every '\'
+ * with '/' to make sure every OS can use them.
+ */
 $root   = rtrim(str_replace('\\', '/', dirname(__DIR__))).'/';
 $public = $root.'public/';
 $src    = $root.'src/';
@@ -14,6 +18,10 @@ include($src.'functions/debug.php');
 
 set_error_handler('App\functions\errorHandler');
 
+
+/**
+ * Here we include all the file that will be used
+ */
 include($src.'features/Runnable.php');
 include($src.'features/RunnableInterface.php');
 include($src.'features/Stringable.php');

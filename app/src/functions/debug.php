@@ -1,14 +1,30 @@
 <?php
 
 namespace App\functions;
-
+/**
+ * @param $code
+ * @param $message
+ * @param $file
+ * @param $line
+ * @throws \Exception
+ *
+ *This will be used to catch error, throw the error as an exception to allow for its display.
+ */
 function errorHandler($code, $message, $file, $line)
 {
     throw new \Exception("$message - Error from $file, l.$line", $code);
 }
 
+/**
+ * This will receive as parameter an exception, to display it as HTML to allow for easier bugfix
+ * @param \Throwable $exception
+ * @return string
+ */
 function exceptionToHtml(\Throwable $exception)
 {
+    /**
+     * here we setup the block of html code for an error
+     */
     $html  = '<div style="font-family:monospace;color:darkred;background-color:#eae8e4;';
     $html .= 'border:1px solid;padding:1em;margin:1em auto;max-width:500px;word-break:break-all;">';
     $html .= '<h3 style="color:darkred;margin-top:0;">Exception ';
@@ -18,7 +34,10 @@ function exceptionToHtml(\Throwable $exception)
     $html .= ', l.'.$exception->getLine().'</p>';
     $html .= '</div>';
 
-    if ($previous = $exception->getPrevious()) 
+    if ($previous = $exception->getPrevious())
+        /**
+         * if this return true, the html block setup earlier is used, and receive the error as param, to display it
+         */
         $html = $html.exceptionToHtml($previous);
 
     return $html;
